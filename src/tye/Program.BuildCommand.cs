@@ -21,6 +21,7 @@ namespace Microsoft.Tye
                 StandardOptions.Verbosity,
                 StandardOptions.Framework,
                 StandardOptions.Environment,
+                StandardOptions.BuildId,
             };
 
             command.Handler = CommandHandler.Create<BuildCommandArguments>(args =>
@@ -36,7 +37,7 @@ namespace Microsoft.Tye
 
                 var filter = ApplicationFactoryFilter.GetApplicationFactoryFilter(args.Tags);
 
-                return BuildHost.BuildAsync(output, args.Path, args.Interactive, args.Environment,args.Framework, filter);
+                return BuildHost.BuildAsync(output, args.Path, args.Interactive, args.Environment, args.BuildId, args.Framework, filter);
             });
 
             return command;
@@ -57,6 +58,8 @@ namespace Microsoft.Tye
             public string[] Tags { get; set; } = Array.Empty<string>();
 
             public string Environment { get; set; } = default!;
+
+            public string? BuildId { get; set; }
         }
     }
 }

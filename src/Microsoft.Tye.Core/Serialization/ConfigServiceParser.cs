@@ -59,9 +59,6 @@ namespace Tye.Serialization
                     case "dockerFileContext":
                         service.DockerFileContext = YamlParser.GetScalarValue(key, child.Value);
                         break;
-                    case "dockerImageVersion":
-                        service.DockerImageVersion = YamlParser.GetScalarValue(key, child.Value);
-                        break;
                     case "project":
                         service.Project = YamlParser.GetScalarValue(key, child.Value);
                         break;
@@ -166,6 +163,12 @@ namespace Tye.Serialization
                         break;
                     case "cloneDirectory":
                         service.CloneDirectory = YamlParser.GetScalarValue(key, child.Value);
+                        break;
+                    case "mainImageVersion":
+                        service.MainImageVersion = YamlParser.GetScalarValue(key, child.Value);
+                        break;
+                    case "projectImageName":
+                        service.ProjectImageName = YamlParser.GetScalarValue(key, child.Value);
                         break;
                     default:
                         throw new TyeYamlException(child.Key.Start, CoreStrings.FormatUnrecognizedKey(key));

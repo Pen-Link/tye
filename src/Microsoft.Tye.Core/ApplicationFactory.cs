@@ -17,7 +17,7 @@ namespace Microsoft.Tye
 {
     public static class ApplicationFactory
     {
-        public static async Task<ApplicationBuilder> CreateAsync(OutputContext output, FileInfo source, string? framework = null, ApplicationFactoryFilter? filter = null, string? environment = null)
+        public static async Task<ApplicationBuilder> CreateAsync(OutputContext output, FileInfo source, string? framework = null, ApplicationFactoryFilter? filter = null, string? environment = null, string? buildId = null)
         {
             if (source is null)
             {
@@ -227,9 +227,17 @@ namespace Microsoft.Tye
 
                         // We don't apply more container defaults here because we might need
                         // to prompt for the registry name.
-                        var imageVersion = configService.DockerImageVersion ?? DateTime.UtcNow.ToString("MM\\.dd\\.yyyy\\.HH\\.mm\\.ss");
-                        var imageTag = string.IsNullOrWhiteSpace(environment) ? imageVersion : $"{environment}-{imageVersion}";
-                        project.ContainerInfo = new ContainerInfo() { UseMultiphaseDockerfile = false, ImageTag = imageTag };
+
+                        var envTagPart = string.IsNullOrEmpty(environment) ? string.Empty : $"{environment}-";
+                        var mainImageVersion = configService.MainImageVersion ?? config.MainImageVersion;
+                        var mainImageTagPart = string.IsNullOrEmpty(mainImageVersion) ? string.Empty : $"{mainImageVersion}-";
+                        var uniqueTagPart = buildId ?? DateTime.UtcNow.ToString("MM\\.dd\\.yyyy\\.HH\\.mm\\.ss");
+                        var imageTag = $"{envTagPart}{mainImageTagPart}{uniqueTagPart}";
+                        var imageName = configService.ProjectImageName;
+                        if (!string.IsNullOrEmpty(imageName) && !string.IsNullOrEmpty(config.Registry))
+                            imageName = $"{config.Registry}/{imageName}";
+
+                        project.ContainerInfo = new ContainerInfo() { UseMultiphaseDockerfile = false, ImageTag = imageTag, ImageName = imageName, };
 
                         // If project evaluation is successful this should not happen, therefore an exception will be thrown.
                         if (!projectMetadata.ContainsKey(configService.Name))

@@ -58,6 +58,9 @@ namespace Tye.Serialization
                             throw new TyeYamlException(child.Key.Start, CoreStrings.FormatMustBeAnInteger(key));
                         }
                         break;
+                    case "mainImageVersion":
+                        app.MainImageVersion = YamlParser.GetScalarValue(key, child.Value);
+                        break;
                     case "ingress":
                         YamlParser.ThrowIfNotYamlSequence(key, child.Value);
                         ConfigIngressParser.HandleIngress((child.Value as YamlSequenceNode)!, app.Ingress);

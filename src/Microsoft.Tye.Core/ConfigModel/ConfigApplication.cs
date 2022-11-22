@@ -36,6 +36,11 @@ namespace Microsoft.Tye.ConfigModel
 
         public string? Network { get; set; }
 
+        /// <summary>
+        /// This version will be used in the tagged docker images. Can be overriden at the service level.
+        /// </summary>
+        public string? MainImageVersion { get; set; }
+
         public List<Dictionary<string, object>> Extensions { get; set; } = new List<Dictionary<string, object>>();
 
         public List<ConfigService> Services { get; set; } = new List<ConfigService>();

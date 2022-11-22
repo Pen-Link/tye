@@ -24,7 +24,6 @@ namespace Microsoft.Tye.ConfigModel
         public string? DockerFile { get; set; }
         public Dictionary<string, string> DockerFileArgs { get; set; } = new Dictionary<string, string>();
         public string? DockerFileContext { get; set; }
-        public string? DockerImageVersion { get; set; }
         public string? Project { get; set; }
         public string? ProjectFullPath { get; set; }
         public string? Include { get; set; }
@@ -47,5 +46,15 @@ namespace Microsoft.Tye.ConfigModel
         public string? Version { get; set; }
         public string? Architecture { get; set; }
         public string? CloneDirectory { get; internal set; }
+
+        /// <summary>
+        /// This version will be used in the tag of images. This will be prioritized over <see cref="ConfigApplication.MainImageVersion"/>.
+        /// </summary>
+        public string? MainImageVersion { get; set; }
+
+        /// <summary>
+        /// Name of the docker image. Ignored when <see cref="Project"/> is <c>null</c>. 
+        /// </summary>
+        public string? ProjectImageName { get; set; }
     }
 }
