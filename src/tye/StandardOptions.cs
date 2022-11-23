@@ -92,6 +92,17 @@ namespace Microsoft.Tye
             }
         }
 
+        public static Option BuildId
+        {
+            get
+            {
+                return new Option(new[] { "-b", "--build-id" }, "Build ID. Used for uniquely naming image tags.")
+                {
+                    Argument = new Argument<string?>(),
+                };
+            }
+        }
+
         public static Option Outputs
         {
             get

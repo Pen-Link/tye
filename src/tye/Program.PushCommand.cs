@@ -23,6 +23,7 @@ namespace Microsoft.Tye
                 StandardOptions.Framework,
                 StandardOptions.Environment,
                 StandardOptions.IncludeLatestTag,
+                StandardOptions.BuildId,
                 StandardOptions.CreateForce("Override validation and force push.")
             };
 
@@ -39,7 +40,7 @@ namespace Microsoft.Tye
 
                 var filter = ApplicationFactoryFilter.GetApplicationFactoryFilter(args.Tags);
 
-                var application = await ApplicationFactory.CreateAsync(output, args.Path, args.Framework, filter, args.Environment);
+                var application = await ApplicationFactory.CreateAsync(output, args.Path, args.Framework, filter, args.Environment, args.BuildId);
                 if (application.Services.Count == 0)
                 {
                     throw new CommandException($"No services found in \"{application.Source.Name}\"");
@@ -89,6 +90,8 @@ namespace Microsoft.Tye
             public string Environment { get; set; } = default!;
 
             public bool IncludeLatestTag { get; set; } = true;
+
+            public string? BuildId { get; set; }
         }
     }
 }
