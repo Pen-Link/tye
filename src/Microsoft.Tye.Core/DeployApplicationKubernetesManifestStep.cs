@@ -78,12 +78,14 @@ namespace Microsoft.Tye
                     };
 
                     var retries = 0;
-                    var namespaceArg = string.IsNullOrEmpty(application.Namespace) ? string.Empty : $"-n {application.Namespace}";
+                    var namespaceParameter = !string.IsNullOrEmpty(application.Namespace)
+                        ? $"--namespace \"{application.Namespace}\""
+                        : "";
                     while (!done && retries < 60)
                     {
                         var ingressExitCode = await ProcessUtil.ExecuteAsync(
                             "kubectl",
-                            $"get ingress {ingress.Name} {namespaceArg} -o jsonpath='{{..ip}}'",
+                            $"get ingress {ingress.Name} {namespaceParameter} -o jsonpath='{{..ip}}'",
                             Environment.CurrentDirectory,
                             complete,
                             capture.StdErr);
