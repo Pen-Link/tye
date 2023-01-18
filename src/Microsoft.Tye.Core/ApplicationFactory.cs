@@ -234,8 +234,8 @@ namespace Microsoft.Tye
                         var uniqueTagPart = buildId ?? DateTime.UtcNow.ToString("MM\\.dd\\.yyyy\\.HH\\.mm\\.ss");
                         var imageTag = $"{envTagPart}{mainImageTagPart}{uniqueTagPart}";
                         var imageName = configService.ProjectImageName;
-                        if (!string.IsNullOrEmpty(imageName) && !string.IsNullOrEmpty(config.Registry))
-                            imageName = $"{config.Registry}/{imageName}";
+                        if (!string.IsNullOrEmpty(imageName) && !string.IsNullOrEmpty(config.Registry?.Hostname))
+                            imageName = $"{config.Registry.Hostname}/{imageName}";
 
                         project.ContainerInfo = new ContainerInfo() { UseMultiphaseDockerfile = false, ImageTag = imageTag, ImageName = imageName, };
 
