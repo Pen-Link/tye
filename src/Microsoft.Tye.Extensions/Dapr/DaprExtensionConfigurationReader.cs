@@ -59,6 +59,7 @@ namespace Microsoft.Tye.Extensions.Dapr
             commonConfiguration.EnableProfiling = TryGetValue<bool>(rawConfiguration, "enable-profiling");
             commonConfiguration.HttpMaxRequestSize = TryGetValue<int>(rawConfiguration, "http-max-request-size");
             commonConfiguration.LogLevel = TryGetValue(rawConfiguration, "log-level");
+            commonConfiguration.Namespace = TryGetValue(rawConfiguration, "namespace");
             commonConfiguration.PlacementPort = TryGetValue<int>(rawConfiguration, "placement-port");
         }
 
