@@ -71,6 +71,7 @@ namespace Microsoft.Tye.Extensions.Dapr
                     var daprExecutablePath = GetDaprExecutablePath();
 
                     string appId = serviceConfiguration?.AppId ?? project.Name;
+                    string? daprNamespace = serviceConfiguration?.Namespace ?? extensionConfiguration?.Namespace;
 
                     var proxy = new ExecutableServiceBuilder($"{project.Name}-dapr", daprExecutablePath, ServiceSource.Extension)
                     {
@@ -196,6 +197,14 @@ namespace Microsoft.Tye.Extensions.Dapr
                     };
                     proxy.Bindings.Add(metrics);
 
+                    if (!string.IsNullOrEmpty(daprNamespace))
+                    {
+                        var ns = new EnvironmentVariableBuilder("NAMESPACE")
+                        {
+                            Value = daprNamespace,
+                        };
+                        proxy.EnvironmentVariables.Add(ns);
+                    }
                     if (httpBinding != null)
                     {
                         // Set APP_PORT based on the project's assigned port for http

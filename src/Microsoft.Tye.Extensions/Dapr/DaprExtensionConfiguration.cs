@@ -16,6 +16,7 @@ namespace Microsoft.Tye.Extensions.Dapr
         public bool? EnableProfiling { get; set; }
         public int? HttpMaxRequestSize { get; set; }
         public string? LogLevel { get; set; }
+        public string? Namespace { get; set; }
         public int? PlacementPort { get; set; }
     }
 
