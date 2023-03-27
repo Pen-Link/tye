@@ -214,7 +214,7 @@ namespace Microsoft.Tye.Hosting
                                 {
                                     logger.LogInformation("Build Watcher: Building {Targets} of solution {SolutionPath}...", targets, solutionPath);
 
-                                    var buildResult = await ProcessUtil.RunAsync("dotnet", $"msbuild {solutionPath} -target:{targets}", throwOnError: false, workingDirectory: workingDirectory, cancellationToken: cancellationToken);
+                                    var buildResult = await ProcessUtil.RunAsync("dotnet", $"msbuild {solutionPath} -target:\"{targets}\"", throwOnError: false, workingDirectory: workingDirectory, cancellationToken: cancellationToken);
 
                                     if (buildResult.ExitCode != 0)
                                     {
