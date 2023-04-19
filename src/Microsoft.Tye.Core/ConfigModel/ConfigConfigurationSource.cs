@@ -11,7 +11,7 @@ namespace Microsoft.Tye.ConfigModel
         [Required]
         public string Name { get; set; } = default!;
 
-        [Required]
+        [Required(AllowEmptyStrings = true)]
         public string Value { get; set; } = default!;
     }
 }
