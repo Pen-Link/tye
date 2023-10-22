@@ -18,6 +18,7 @@ namespace Microsoft.Tye.Extensions.Dapr
         public string? LogLevel { get; set; }
         public string? Namespace { get; set; }
         public int? PlacementPort { get; set; }
+        public bool? AppHealthCheck { get; set; }
     }
 
     internal sealed class DaprExtensionServiceConfiguration : DaprExtensionCommonConfiguration

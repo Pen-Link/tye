@@ -108,6 +108,13 @@ namespace Microsoft.Tye.Extensions.Dapr
                         proxy.Args += " --app-ssl";
                     }
 
+                    var appHealthCheck = serviceConfiguration?.AppHealthCheck ?? extensionConfiguration?.AppHealthCheck;
+
+                    if (appHealthCheck == true)
+                    {
+                        proxy.Args += " --enable-app-health-check";
+                    }
+
                     var daprPlacementPort = serviceConfiguration?.PlacementPort ?? extensionConfiguration?.PlacementPort;
 
                     if (daprPlacementPort.HasValue)
@@ -332,6 +339,11 @@ namespace Microsoft.Tye.Extensions.Dapr
                     if (logLevel != null)
                     {
                         deployment.Annotations.TryAdd("dapr.io/log-level", logLevel);
+                    }
+
+                    if (serviceConfiguration?.AppHealthCheck ?? extensionConfiguration?.AppHealthCheck ?? false)
+                    {
+                        deployment.Annotations.TryAdd("dapr.io/enable-app-health-check", "true");
                     }
                 }
             }
